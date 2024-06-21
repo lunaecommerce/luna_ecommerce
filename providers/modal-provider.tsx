@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import PreviewModal from "@/components/preview-modal";
+import { AddressModal } from '@/components/modals/address-modal';
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -15,11 +16,12 @@ const ModalProvider = () => {
     return null;
   }
 
-  return ( 
+  return (
     <>
       <PreviewModal />
+      <AddressModal />
     </>
-   );
+  );
 }
  
 export default ModalProvider;
