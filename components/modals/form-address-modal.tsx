@@ -86,7 +86,7 @@ export const AddressFormModal = () => {
       if (initialData) {
         await updateAddress(initialData.id, data);
       } else {
-        console.log('oi',data)
+        console.log('oi', data)
         await postAddress(data);
       }
       toast.success(toastMessage);
@@ -121,24 +121,23 @@ export const AddressFormModal = () => {
       if (cep.length < 7) {
         return false;
       }
-      const prefixoCEP = cep.substring(0, 5);
-
-      if (prefixoCEP.startsWith('55435') || prefixoCEP.startsWith('55299')) {
-        setIsValidCep(true);
-      } else {
-        setIsValidCep(false);
-      }
       if (cep.length > 7) {
         const res: Iviacep = await axios.get(
           `https://viacep.com.br/ws/${cep}/json/`
         );
+        if (res.data.localidade !== 'Garanhuns' && res.data.localidade !== 'São João') {
+          setIsValidCep(false);
+        } else {
+          setIsValidCep(true);
+        }
+
 
         form.setValue('district', res.data.bairro);
         form.setValue('street', res.data.logradouro);
         form.setValue('state', res.data.uf.toUpperCase());
         form.setValue('city', res.data.localidade.toUpperCase());
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
