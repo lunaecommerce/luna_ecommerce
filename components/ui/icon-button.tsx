@@ -23,6 +23,7 @@ const IconButton: React.FC<IconButtonProps> = ({
         className
       )}
       disabled={disabled}
+      aria-label="Button"
     >
       {icon}
     </button>

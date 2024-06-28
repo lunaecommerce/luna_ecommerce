@@ -14,6 +14,13 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      // Gera source maps apenas para produção no cliente
+      config.devtool = 'source-map';
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig

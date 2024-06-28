@@ -1,10 +1,10 @@
 import { Address } from "@/types";
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+const URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_STORE_ID}`;
 
 const getAddresses = async (clientId: string): Promise<Address[]> => {
   try {
-    const res = await fetch(`${URL}/${clientId}/clientAddress`);
+    const res = await fetch(`${URL}/clientAddress/${clientId}`);
 
     if (!res.ok) {
       console.error(`Failed to fetch client address: ${res.statusText}`);

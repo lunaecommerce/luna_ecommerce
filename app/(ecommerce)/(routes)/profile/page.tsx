@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 import Container from '@/components/ui/container';
 import { UserProfile } from '@clerk/nextjs';
 
-export const revalidate = 0;
-
 const ProfilePage = () => {
   const [isMounted, setIsMounted] = useState(false);
 

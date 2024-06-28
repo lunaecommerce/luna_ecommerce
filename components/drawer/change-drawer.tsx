@@ -81,7 +81,7 @@ function ChangeForm({ className }: React.ComponentProps<'form'>) {
   const items = useCart(state => state.items);
 
   const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.price);
+    return total + Number(item.product.price);
   }, 0);
 
   const maxChangeValue = 50;

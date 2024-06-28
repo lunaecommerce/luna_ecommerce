@@ -5,15 +5,15 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <>
-      <div className='w-screen bg-g-yellow-100'>
-        <div className='relative flex max-lg:flex-col justify-between mx-auto max-w-7xl p-12 text-g-yellow'>
+      <div className='w-screen bg-g-yellow-700'>
+        <div className='relative flex max-lg:flex-col justify-between mx-auto max-w-7xl p-12 text-white'>
           <div className='space-y-8 z-10'>
             <h2 className='text-5xl font-black'>
               <span>ENTREGA EM ATÉ 24 HORAS </span>
               <br />
               EM GARANHUNS
             </h2>
-            <p className='text-g-yellow-700 text-xl lg:w-6/12'>
+            <p className='text-xl text-bold lg:w-6/12'>
               Aproveite nosso serviço exclusivo de entrega rápida em Garanhuns!
               Garantimos que seu pedido chegue à sua porta em até 24 horas.
               Estamos aqui para proporcionar a você a melhor experiência de
@@ -22,7 +22,7 @@ const Footer = () => {
           </div>
           <Image
             alt=''
-            src='/truck_delivery_s.svg'
+            src='/truck_delivery_ss.svg'
             width={400}
             height={400}
             className='lg:absolute top-0 right-20'
@@ -72,12 +72,14 @@ const Footer = () => {
                     <Link
                       href={'https://instagram.com/garanhunsacessorios'}
                       target='_blank'
+                      aria-label='facebook link'
                     >
                       <Facebook />
                     </Link>
                     <Link
                       href={'https://instagram.com/garanhunsacessorios'}
                       target='_blank'
+                      aria-label='instagram link'
                     >
                       <Instagram />
                     </Link>

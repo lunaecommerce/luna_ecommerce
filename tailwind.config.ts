@@ -34,15 +34,18 @@ const config = {
       },
       colors: {
         'g-blue': {
-          DEFAULT: '#1D0B63',
+          DEFAULT: '#250E81',
           100: '#858FFF',
+        },
+        'g-brown': {
+          DEFAULT: '#613900'
         },
         'g-yellow': {
           DEFAULT: '#FF9500',
           100: '#FFE6C2',
           200: '#FFD599',
           300: '#FFC370',
-          700: '#E08300',
+          700: '#F58F00',
         },
         'gray-color': {
           DEFAULT: '#F5F5F7',

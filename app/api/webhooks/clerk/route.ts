@@ -73,6 +73,7 @@ async function handler(request: Request) {
     await prisma.client.upsert({
       where: { externalId: id as string },
       create: {
+        id: id as string,
         externalId: id as string,
         attributes,
       },

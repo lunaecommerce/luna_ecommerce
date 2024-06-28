@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://gacessorios.com.br/
+
+# Sitemaps
+Sitemap: https://gacessorios.com.br/sitemap.xml
+Sitemap: https://www.seusite.com/sitemap.xml

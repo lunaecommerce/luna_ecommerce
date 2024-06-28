@@ -86,6 +86,7 @@ export const AddressFormModal = () => {
       if (initialData) {
         await updateAddress(initialData.id, data);
       } else {
+        console.log('oi',data)
         await postAddress(data);
       }
       toast.success(toastMessage);

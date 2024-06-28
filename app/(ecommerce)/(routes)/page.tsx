@@ -44,7 +44,7 @@ const HomePage = async () => {
           ))}
 
           <div className='flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8'>
-            <h3 className='font-bold text-4xl'>Nossas vantagens</h3>
+            <h2 className='font-bold text-4xl'>Nossas vantagens</h2>
             <InfoCards />
           </div>
 
