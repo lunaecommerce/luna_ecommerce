@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import IconButton from '@/components/ui/icon-button';
 import { useFormAddressModal } from '@/hooks/use-address-form-modal';
 import { useAddressModal } from '@/hooks/use-address-modal';
-import { Address } from '@/types';
+import { Address, ClientAddress } from '@/types';
 import { Edit, Plus, Trash } from 'lucide-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 
 interface AddressesProps {
   clientId: string | null;
-  initialClientAddresses: Address[] | null;
+  initialClientAddresses: ClientAddress[] | null;
 }
 
 const AddressesList: React.FC<AddressesProps> = ({
@@ -45,15 +45,16 @@ const AddressesList: React.FC<AddressesProps> = ({
     return null;
   }
 
-  const handleSelectAddress = (addressSelected: Address) => {
+  const handleSelectAddress = (addressSelected: ClientAddress) => {
     setSelectedAddress(addressSelected);
     onClose();
   };
 
-  const onDeleteAddress = async (data: Address) => {
+  const onDeleteAddress = async (data: ClientAddress) => {
     try {
       if (clientId) {
-        if (data.isDefault === true) {
+        const clientAddresses = await getAddresses(clientId)
+        if (clientAddresses.length === 1 || data.isDefault === true) {
           toast.error('Não e possivel excluir um endereço padrão');
           return;
         }
@@ -73,7 +74,7 @@ const AddressesList: React.FC<AddressesProps> = ({
     }
   };
 
-  const handleOpenAddress = (address: Address | null) => {
+  const handleOpenAddress = (address: ClientAddress | null) => {
     if (clientId) {
       formAddressModal.onOpenFormAddress(address, clientId);
     }

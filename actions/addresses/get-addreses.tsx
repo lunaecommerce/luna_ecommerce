@@ -1,8 +1,8 @@
-import { Address } from "@/types";
+import { Address, ClientAddress } from "@/types";
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_STORE_ID}`;
 
-const getAddresses = async (clientId: string): Promise<Address[]> => {
+const getAddresses = async (clientId: string): Promise<ClientAddress[]> => {
   try {
     const res = await fetch(`${URL}/clientAddress/${clientId}`);
 

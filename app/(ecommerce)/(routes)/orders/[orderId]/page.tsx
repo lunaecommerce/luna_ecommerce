@@ -35,7 +35,6 @@ const OrdersDetailsPage = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        console.log('teste,', orderId);
         setLoading(true);
         const order = await getOrderById(orderId as string);
         setOrder(order);

@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Currency from '@/components/ui/currency';
 import { Pix, CreditCard, MoneyBill } from '@/components/icons';
 
-import { Address, PaymentMethod } from '@/types';
+import { Address, ClientAddress, PaymentMethod } from '@/types';
 import getAddresses from '@/actions/addresses/get-addreses';
 import useCart from '@/hooks/use-cart';
 import { useAddressModal } from '@/hooks/use-address-modal';
@@ -22,7 +22,7 @@ import CartItem from './cart-item';
 
 interface CheckoutFormProps {
   clientId: string | null;
-  clientAddresses: Address[] | null;
+  clientAddresses: ClientAddress[] | null;
   paymentMethods: PaymentMethod[] | null;
 }
 
@@ -34,17 +34,21 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
   const { selectedAddress, setSelectedAddress } = useAddressModal();
   const addressModal = useAddressModal();
   const { onOpenChangeDrawer, changeValue } = useChangeDrawer();
+  const newAddresses = getAddresses(clientId || '');
   const {
     onOpenConfirmOrderDrawer,
     setSelectedPaymentMethod,
     selectedPaymentMethod,
   } = useConfirmOrderDrawer();
-  console.log(selectedPaymentMethod?.paymentId);
+
   useEffect(() => {
     const defaultAddress = clientAddresses?.find(
       address => address.isDefault === true
     );
     setSelectedAddress(defaultAddress || null);
+    if (clientAddresses !== null && clientAddresses.length <= 1) {
+      setSelectedAddress(clientAddresses[0])
+    }
   }, [clientAddresses]);
 
   const onViewAddresses: MouseEventHandler<HTMLButtonElement> = async event => {

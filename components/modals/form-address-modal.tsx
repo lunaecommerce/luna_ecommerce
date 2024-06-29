@@ -26,6 +26,7 @@ import { states } from '@/constants';
 import axios from 'axios';
 import getAddresses from '@/actions/addresses/get-addreses';
 import { useAddressModal } from '@/hooks/use-address-modal';
+import { MaskedInput } from '../masked-input';
 
 const formSchema = z.object({
   zipcode: z.string().min(8, { message: 'CEP é um campo obrigatório' }),
@@ -36,7 +37,7 @@ const formSchema = z.object({
   number: z.string().min(2, { message: 'Número é um campo obrigatório' }),
   complement: z.string(),
   clientName: z.string().min(2, { message: 'Nome é um campo obrigatório' }),
-  clientPhone: z.string().min(2, { message: 'Celular é um campo obrigatório' }),
+  clientPhone: z.string().min(11, { message: 'Celular é um campo obrigatório' }),
   clientId: z.string(),
 });
 
@@ -48,7 +49,7 @@ export const AddressFormModal = () => {
   const initialData = useFormAddressModal(state => state.initialData);
   const { isOpenFormAddress, onCloseFormAddress } = useFormAddressModal();
   const clientId = useFormAddressModal(state => state).clientId;
-  const { setAdresses } = useAddressModal();
+  const { setAdresses, setSelectedAddress } = useAddressModal();
   const [isValidCep, setIsValidCep] = useState(true);
 
   const title = initialData ? 'Editar endereço' : 'Cadastre um novo endereço';
@@ -56,20 +57,34 @@ export const AddressFormModal = () => {
     ? 'Endereço atualizado.'
     : 'Endereço criado.';
 
+  // Convertendo valores nulos para string vazia
+  const sanitizedInitialData = initialData ? {
+    ...initialData,
+    number: initialData.number ?? '',
+    complement: initialData.complement ?? '',
+    clientName: initialData.clientName ?? '',
+    clientPhone: initialData.clientPhone ?? '',
+    zipcode: initialData.zipcode ?? '',
+    city: initialData.city ?? '',
+    state: initialData.state ?? '',
+    district: initialData.district ?? '',
+    street: initialData.street ?? '',
+  } : {
+    zipcode: '',
+    city: '',
+    state: '',
+    district: '',
+    street: '',
+    number: '',
+    complement: '',
+    clientName: '',
+    clientPhone: '',
+    clientId: clientId,
+  };
+
   const form = useForm<AddressFormModalValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || {
-      zipcode: '',
-      city: '',
-      state: '',
-      district: '',
-      street: '',
-      number: '',
-      complement: '',
-      clientName: '',
-      clientPhone: '',
-      clientId: clientId,
-    },
+    defaultValues: sanitizedInitialData,
   });
 
   useEffect(() => {
@@ -86,13 +101,15 @@ export const AddressFormModal = () => {
       if (initialData) {
         await updateAddress(initialData.id, data);
       } else {
-        console.log('oi', data)
         await postAddress(data);
       }
       toast.success(toastMessage);
 
       const newAddresses = await getAddresses(clientId);
       setAdresses(newAddresses);
+      if (newAddresses.length <= 1) {
+        setSelectedAddress(newAddresses[0])
+      }
       onCloseFormAddress();
     } catch (error: any) {
       toast.error('Algo de errado ocorreu, tente novamente.');
@@ -130,8 +147,6 @@ export const AddressFormModal = () => {
         } else {
           setIsValidCep(true);
         }
-
-
         form.setValue('district', res.data.bairro);
         form.setValue('street', res.data.logradouro);
         form.setValue('state', res.data.uf.toUpperCase());
@@ -154,11 +169,13 @@ export const AddressFormModal = () => {
                   <FormItem>
                     <FormLabel>CEP</FormLabel>
                     <FormControl>
-                      <Input
+                      <MaskedInput
+                        mask='99999-999'
                         disabled={loading}
                         placeholder='Digite o cep'
                         {...field}
                         onBlur={() => handleBlurCep(field.value || '')}
+                        autoFocus
                       />
                     </FormControl>
                     <FormMessage />
@@ -174,7 +191,7 @@ export const AddressFormModal = () => {
                   <FormLabel>Estado</FormLabel>
                   <FormControl>
                     <Combobox
-                      disabled={loading}
+                      disabled={true}
                       options={states.map(option => ({
                         id: option.id,
                         value: option.sigla,
@@ -197,7 +214,7 @@ export const AddressFormModal = () => {
                 <FormItem>
                   <FormLabel>Cidade</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder='Cidade' {...field} />
+                    <Input disabled={true} placeholder='Cidade' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -293,8 +310,10 @@ export const AddressFormModal = () => {
                 <FormItem>
                   <FormLabel>Celular</FormLabel>
                   <FormControl>
-                    <Input
+                    <MaskedInput
                       disabled={loading}
+                      type='number'
+                      mask='(99) 99999-9999'
                       placeholder='Celular para contato'
                       {...field}
                     />
