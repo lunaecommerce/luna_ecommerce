@@ -20,10 +20,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
-import { SignInButton, SignOutButton, useAuth } from '@clerk/nextjs';
+import { SignInButton, SignOutButton, useAuth, useClerk } from '@clerk/nextjs';
 
 export function ProfileOptions() {
   const { sessionId } = useAuth();
+  const { signOut } = useClerk();
 
   if (!sessionId) {
     return (
@@ -32,6 +33,11 @@ export function ProfileOptions() {
       </SignInButton>
     );
   }
+
+  const handleSignOut = async () => {
+    await signOut({redirectUrl: '/'})
+    window.location.reload();
+  };
 
   return (
     <DropdownMenu>
@@ -60,11 +66,9 @@ export function ProfileOptions() {
             Pedidos
           </DropdownMenuItem>
         </Link>
-        <DropdownMenuItem className='flex px-6 py-4 gap-4 items-center text-start'>
+        <DropdownMenuItem className='flex px-6 py-4 gap-4 items-center text-start' onClick={handleSignOut}>
           <LogOut size={18} />
-          <SignOutButton signOutOptions={{ sessionId }} redirectUrl='/'>
-            Sair
-            </SignOutButton>
+          <span>Sair</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

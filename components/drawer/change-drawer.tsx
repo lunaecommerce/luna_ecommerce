@@ -127,7 +127,7 @@ function ChangeForm({ className }: React.ComponentProps<'form'>) {
               <FormItem>
                 <FormLabel>Troco para</FormLabel>
                 <FormControl>
-                  <Input placeholder='R$100' {...field} />
+                  <Input placeholder='R$100' {...field} className='text-md'/>
                 </FormControl>
                 <FormMessage />
               </FormItem>

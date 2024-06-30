@@ -8,7 +8,7 @@ import {
 
 const PagePolicies = () => {
   return (
-    <div className='h-min-screen h-screen px-8 py-4'>
+    <div className='h-min-screen px-8 py-4'>
       <div className='pb-8'>
         <h2 className='text-2xl font-bold pb-2'>
           Política de troca e devoluções

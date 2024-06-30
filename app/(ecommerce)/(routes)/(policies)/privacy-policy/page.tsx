@@ -8,7 +8,7 @@ import {
 
 const PrivacyPolicyPage = () => {
   return (
-    <div className='h-min-screen h-screen px-8 py-4'>
+    <div className='h-min-screen px-8 py-4'>
       <div className='pb-8 space-y-4'>
         <h2 className='text-2xl font-bold pb-2'>Política de privacidade</h2>
         <p>Última atualização: 11/05/2024</p>
