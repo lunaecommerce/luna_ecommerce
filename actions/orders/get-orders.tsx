@@ -28,7 +28,6 @@ const getOrders = async (query: Query): Promise<OrderData> => {
 const getOrderById = async (
   orderId: string,
 ): Promise<Order> => {
-  console.log(orderId);
 
   const url = `${URL}/${orderId}`;
 

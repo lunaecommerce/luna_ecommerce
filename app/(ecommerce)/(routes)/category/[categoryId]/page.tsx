@@ -40,7 +40,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   const category = await getCategory(params.categoryId);
 
   return (
-    <div className='bg-white h-screen'>
+    <div className='bg-white min-h-screen'>
       <Container>
         <div className='px-4 sm:px-6 lg:px-8 pb-24'>
           <div className='lg:grid lg:grid-cols-5 lg:gap-x-8'>

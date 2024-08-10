@@ -37,13 +37,13 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ data }) => {
     return null;
   }
   return (
-    <>
+    <div className='flex flex-col z-50'>
       <Button
         onClick={onOpenNav}
-        className='flex items-center py-8 px-8 p-4 lg:hidden bg-transparent'
+        className='flex items-center lg:hidden bg-transparent'
         aria-label='menu button'
       >
-        <MenuIcon size={20} color='black' />
+        <MenuIcon size={24} color='black' />
       </Button>
 
       <Dialog
@@ -60,7 +60,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ data }) => {
           <DialogPanel className='relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl'>
             {/* Close button */}
             <div className='flex items-center justify-end px-4'>
-              <IconButton icon={<X size={15} />} onClick={onCloseNav} />
+              <IconButton icon={<X size={18} />} onClick={onCloseNav} />
             </div>
             <div className='flex flex-col p-4'>
               <h3 className='text-lg font-semibold'>Categorias</h3>
@@ -74,6 +74,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ data }) => {
                       'font-medium transition-colors hover:text-black capitalize',
                       route.active ? 'text-black' : 'text-neutral-500'
                     )}
+                    onClick={onCloseNav}
                   >
                     {route.label}
                   </Link>
@@ -83,7 +84,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ data }) => {
           </DialogPanel>
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };
 

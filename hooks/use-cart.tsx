@@ -56,16 +56,28 @@ const useCart = create(
 
 export default useCart;
 
-// Função para calcular o subtotal dos itens no carrinho
-export const calculateTotal = (items: cartItem[]): number => {
-  return items.reduce((total, item) => {
-    return total + Number(item.product.price) * Number(item.quantity);
-  }, 0);
-};
 
 // Função para calcular o total (incluindo impostos, frete, etc., se necessário)
 export const calculateSubtotal = (items: cartItem[]): number => {
   return items.reduce((total, item) => {
     return total + Number(item.product.price) * Number(item.quantity);
   }, 0);
+};
+
+export const calculateDiscount = (subtotal: number, discount: number): number => {
+  const totalDiscount = (subtotal * discount);
+  return totalDiscount >= 0 ? totalDiscount : 0;
+};
+
+// Função para calcular o total (incluindo impostos, frete, etc.)
+export const calculateTotal = (
+  items: cartItem[],
+  discount: number,
+  // additionalCosts: AdditionalCosts
+): number => {
+  const subtotal = calculateSubtotal(items);
+  const totalDiscount = calculateDiscount(subtotal, discount);
+
+  const total = subtotal - totalDiscount;
+  return total;
 };

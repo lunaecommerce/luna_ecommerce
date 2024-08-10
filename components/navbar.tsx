@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 import MainNav from '@/components/main-nav';
 import Container from '@/components/ui/container';
 import NavbarActions from '@/components/navbar-actions';
@@ -11,19 +10,19 @@ const Navbar = async () => {
   const categories = await getCategories();
 
   return (
-    <div className='w-full border-b mb-4 sm:mb-6'>
+    <div className='w-full flex flex-col border-b fixed top-0 z-40'>
       <Container>
         <div className='bg-black p-2'>
           <p className='text-white text-sm text-center'>
-            Frete grátis para Garanhuns e São João 
+            Frete grátis para Garanhuns e São João
           </p>
           {/* <p className='text-white text-sm text-center'>
             Frete grátis para Garanhuns e São João | Demais Regiões, para
             compras acima de R$199,90
           </p> */}
         </div>
-        <div className='mx-auto max-w-7xl relative px-4 sm:px-6 lg:px-8 flex h-20 justify-between items-center'>
-          <MobileNavbar data={categories} />
+        <div className='mx-auto max-w-7xl relative px-4 sm:px-6 lg:px-8 flex h-20 justify-between items-center bg-white'>
+          <div className="lg:hidden"> <MobileNavbar data={categories} /></div>
           <div>
             <Link
               href='/'

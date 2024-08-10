@@ -1,11 +1,12 @@
 'use client';
 
-import { PackageCheck, ShieldCheck, ShoppingCart, Wallet } from 'lucide-react';
+import { PackageCheck, Share, ShieldCheck, ShoppingCart, Wallet } from 'lucide-react';
 
 import Currency from '@/components/ui/currency';
 import { Button } from '@/components/ui/button';
-import {  cartItem } from '@/types';
-import useCart from '@/hooks/use-cart';
+import { cartItem } from '@/types';
+import useCart, { calculateDiscount } from '@/hooks/use-cart';
+
 interface InfoProps {
   data: cartItem;
 }
@@ -18,17 +19,26 @@ const Info: React.FC<InfoProps> = ({ data }) => {
   };
   const price: number = parseFloat(data.product.price) || 0;
   const planPrice = price / 3;
-
+  const discountedPrice = price - calculateDiscount(price, 0.20)
+  const planPriceWithDiscount = discountedPrice / 3;
   return (
     <div>
       <h1 className='text-3xl font-bold text-gray-900'>{data.product.name}</h1>
       <div className='mt-3 flex flex-col items-start '>
-        <div className='text-2xl text-gray-900'>
-          <Currency value={data.product.price} />
+        <div className="flex gap-2">
+          <div className='text-xl text-red-500 line-through'>
+            <Currency value={data.product.price} />
+          </div>
+          <div className='text-3xl text-gray-900'>
+            <Currency value={discountedPrice} />
+          </div>
         </div>
-        <div className='flex gap-1 text-g-yellow'>
-          <p>Ou 3x de </p>
-          <Currency value={planPrice} />
+        <div className='flex w-full justify-between text-g-yellow items-center'>
+          <div className="flex gap-1">
+            <p>Ou 3x de</p>
+            <Currency value={planPriceWithDiscount} />
+            <p>sem juros</p>
+          </div>
         </div>
       </div>
       <hr className='my-4' />

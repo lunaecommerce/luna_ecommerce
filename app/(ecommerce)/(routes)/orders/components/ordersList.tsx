@@ -79,7 +79,7 @@ const OrdersList: React.FC<OrdersListProps> = ({ clientId }) => {
   };
   if (loading) {
     return (
-      <div className='flex justify-center w-full h-screen'>
+      <div className='flex justify-center w-full min-h-screen'>
         <Loader />
       </div>
     );
@@ -109,8 +109,8 @@ const OrdersList: React.FC<OrdersListProps> = ({ clientId }) => {
                   </div>
                 </div>
                 <Separator className='mb-4' />
-                <div className='flex max-md:flex-col max-md:gap-16 w-full'>
-                  <div className='flex gap-4 w-full'>
+                <div className='flex max-md:flex-col max-md:gap-16 gap-8 w-full'>
+                  <div className='flex gap-4 w-full overflow-x-auto'>
                     {order.orderItems && order.orderItems.length ? (
                       order.orderItems.map(item => (
                         <div

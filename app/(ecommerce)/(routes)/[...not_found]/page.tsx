@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 const NotFoundPage = () => {
   return (
     <Container>
-      <div className='flex flex-col justify-evenly items-center bg-white h-screen px-6'>
+      <div className='flex flex-col justify-evenly items-center bg-white min-h-screen px-6'>
         <div className='flex flex-col gap-4'>
           <h2 className='text-2xl font-bold'>Nós perdemos essa página!</h2>
           <p>

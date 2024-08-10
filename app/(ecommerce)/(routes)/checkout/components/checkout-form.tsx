@@ -12,7 +12,7 @@ import { Pix, CreditCard, MoneyBill } from '@/components/icons';
 
 import { Address, ClientAddress, PaymentMethod } from '@/types';
 import getAddresses from '@/actions/addresses/get-addreses';
-import useCart from '@/hooks/use-cart';
+import useCart, { calculateDiscount } from '@/hooks/use-cart';
 import { useAddressModal } from '@/hooks/use-address-modal';
 import { useChangeDrawer } from '@/hooks/use-change-drawer';
 import { useConfirmOrderDrawer } from '@/hooks/use-confirm-order-drawer';
@@ -91,10 +91,11 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
 
   // Calcular o subtotal e o total com base nos itens do carrinho
   const subtotalPrice = calculateSubtotal(cart.items);
-  const totalPrice = calculateTotal(cart.items);
-
+  const totalDiscount = calculateDiscount(subtotalPrice, 0.20)
+  const totalPrice = calculateTotal(cart.items, 0.20);
+  
   const handleConfirmOrder = () => {
-    if (selectedAddress === null) {
+    if (selectedAddress === null || selectedAddress === undefined) {
       toast.error('Por favor, informe um endereço.');
     } else if (!selectedPaymentMethod) {
       toast.error('Por favor, selecione uma forma de pagamento.');
@@ -239,6 +240,10 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({
             <div className='flex justify-between'>
               <p>Taxa de entrega</p>
               <Currency value={0} className='font-normal' />
+            </div>
+            <div className='flex justify-between'>
+              <p>Descontos</p>
+              <Currency value={-totalDiscount} className='font-normal' />
             </div>
             <div className='flex justify-between text-lg font-bold'>
               <p>Total</p>

@@ -169,6 +169,8 @@ export interface Product {
   attribute001: string;
   attribute002: string;
   attribute003: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface cartItem {

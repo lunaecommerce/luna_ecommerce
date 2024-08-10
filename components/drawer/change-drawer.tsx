@@ -32,7 +32,7 @@ import { useChangeDrawer } from '@/hooks/use-change-drawer';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useCart from '@/hooks/use-cart';
+import useCart, { calculateTotal } from '@/hooks/use-cart';
 import toast from 'react-hot-toast';
 
 export function ChangeDrawer() {
@@ -80,9 +80,7 @@ function ChangeForm({ className }: React.ComponentProps<'form'>) {
   const { setChangeValue, onCloseChangeDrawer } = useChangeDrawer();
   const items = useCart(state => state.items);
 
-  const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.product.price);
-  }, 0);
+  const totalPrice = calculateTotal(items, 0.20)
 
   const maxChangeValue = 50;
 
@@ -92,7 +90,7 @@ function ChangeForm({ className }: React.ComponentProps<'form'>) {
       changeValue: 0,
     },
   });
-
+  console.log(totalPrice)
   const onSubmit = async (data: ChangeDrawerValues) => {
     if (data?.changeValue > 0) {
       if (data.changeValue - totalPrice > maxChangeValue) {
@@ -100,6 +98,8 @@ function ChangeForm({ className }: React.ComponentProps<'form'>) {
           `A quantia máxima para troco é de R$ ${maxChangeValue}`
         );
         return;
+      } else if (data.changeValue <= totalPrice) {
+        toast.error(`Informe um valor superior ao valor da compra`)
       } else {
         setChangeValue(data.changeValue);
       }
@@ -127,7 +127,7 @@ function ChangeForm({ className }: React.ComponentProps<'form'>) {
               <FormItem>
                 <FormLabel>Troco para</FormLabel>
                 <FormControl>
-                  <Input placeholder='R$100' {...field} className='text-md'/>
+                  <Input placeholder='R$100' {...field} className='text-md' />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -81,7 +81,7 @@ const AddressesList: React.FC<AddressesProps> = ({
   };
   return (
     <div className='h-full'>
-      <div className='space-y-4 py-4 pb-4 mx-4'>
+      <div className='space-y-4 py-4 pb-4 mx-2'>
         <div className='pb-2'>
           <Button
             className='flex justify-center align-center p-8 gap-4 w-full hover:scale-101 transition'
@@ -99,10 +99,9 @@ const AddressesList: React.FC<AddressesProps> = ({
             >
               <Button
                 key={address.id}
-                className={`flex justify-between px-4 py-8 items-center w-full hover:scale-101 transition ${
-                  selectedAddress?.id === address.id &&
+                className={`flex justify-between px-4 py-8 items-center w-full hover:scale-101 transition ${selectedAddress?.id === address.id &&
                   'border-g-yellow border-2'
-                }`}
+                  }`}
                 variant='outline'
                 size='fit'
                 onClick={() => handleSelectAddress(address)}
@@ -116,7 +115,7 @@ const AddressesList: React.FC<AddressesProps> = ({
                   </p>
                 </div>
               </Button>
-              <div className='absolute right-5 top-10 flex gap-4'>
+              <div className='absolute right-5 top-10 flex  gap-4'>
                 <IconButton
                   icon={<Edit className='h-4 w-4' />}
                   disabled={loading}
@@ -140,7 +139,7 @@ const AddressesList: React.FC<AddressesProps> = ({
               />
             </div>
             <p className='text-xl text-center'>
-              Uh-oh! Parece que o Bruno está um pouco perdido por aqui.
+              Uh-oh!
               <br /> Parece que alguém esqueceu de cadastrar um endereço de
               entrega...
             </p>

@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Urbanist } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import { ptBR } from '@clerk/localizations';
@@ -25,6 +26,8 @@ export default function RootLayout({
   return (
     <ClerkProvider
       localization={ptBR}
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
       appearance={{
         variables: {
           colorPrimary: '#FF9500',
@@ -42,9 +45,11 @@ export default function RootLayout({
             <ToastProvider />
             <ModalProvider />
             <DrawerProvider />
-            <main className='mx-auto overflow-x-hidden'>{children}</main>
+            <main className='md:mt-20 mt-28 mx-auto overflow-x-hidden'>{children}</main>
           </ThemeProvider>
         </body>
+        
+      <GoogleAnalytics gaId="G-VS1LRTQ90J" />
       </html>
     </ClerkProvider>
   );

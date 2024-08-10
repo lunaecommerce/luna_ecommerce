@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import Currency from '@/components/ui/currency';
 
@@ -17,6 +17,7 @@ import useCart, { calculateSubtotal, calculateTotal } from '@/hooks/use-cart';
 import postOrder from '@/actions/orders/post-order';
 import { Order, OrderAddress, OrderItem } from '@/types';
 import { useRouter } from 'next/navigation';
+import { DialogDescription } from '@radix-ui/react-dialog';
 
 export const revalidate = 0;
 
@@ -32,6 +33,10 @@ export function ConfirmOrderDrawer() {
         onOpenChange={onCloseConfirmOrderDrawer}
       >
         <DialogContent className='sm:max-w-[425px]'>
+          <DialogHeader className='text-center pt-4'>
+            <DialogTitle>Confirme o pedido</DialogTitle>
+            <DialogDescription>Revise os detalhes do seu pedido abaixo</DialogDescription>
+          </DialogHeader>
           <ConfirmOrderForm />
         </DialogContent>
       </Dialog>
@@ -44,6 +49,10 @@ export function ConfirmOrderDrawer() {
       onClose={() => onCloseConfirmOrderDrawer()}
     >
       <DrawerContent className='pb-4'>
+        <DialogHeader className='pt-4'>
+          <DialogTitle>Confirme o pedido</DialogTitle>
+          <DialogDescription>Revise os detalhes do seu pedido abaixo</DialogDescription>
+        </DialogHeader>
         <ConfirmOrderForm className='px-4' />
       </DrawerContent>
     </Drawer>
@@ -67,7 +76,7 @@ function ConfirmOrderForm({ className }: React.ComponentProps<'form'>) {
 
   const removeAll = useCart(state => state.removeAll);
   const subtotalPrice = calculateSubtotal(items);
-  const totalPrice = calculateTotal(items);
+  const totalPrice = calculateTotal(items, 0.20);
 
   const router = useRouter();
   const onSubmit = async () => {
@@ -122,7 +131,6 @@ function ConfirmOrderForm({ className }: React.ComponentProps<'form'>) {
         orderItems: orderItems as OrderItem[], // Adicionando a lista de itens do pedido
       };
       const order = await postOrder(requestData);
-      console.log(order);
       toast.success('Pedido realizado com sucesso.');
       removeAll();
       onCloseConfirmOrderDrawer()
@@ -141,12 +149,12 @@ function ConfirmOrderForm({ className }: React.ComponentProps<'form'>) {
         ? `Troco para `
         : 'Sem troco'
       : selectedPaymentMethod?.paymentId === 2
-      ? 'Parcele em até 3x'
-      : '';
+        ? 'Parcele em até 3x'
+        : '';
 
   return (
     <div className={cn('grid items-start gap-4 py-4', className)}>
-      <h2 className='text-center text-lg font-semibold'>Confirme a entrega</h2>
+      {/* <h2 className='text-center text-lg font-semibold'>Confirme a entrega</h2> */}
       <div className='flex flex-col gap-1 border p-4 rounded-2xl'>
         <p className='font-semibold capitalize'>
           {selectedAddress?.district},<br /> {selectedAddress?.street},{' '}

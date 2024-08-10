@@ -35,7 +35,6 @@ export function ProfileOptions() {
   }
 
   const handleSignOut = async () => {
-    await signOut({redirectUrl: '/'})
     window.location.reload();
   };
 

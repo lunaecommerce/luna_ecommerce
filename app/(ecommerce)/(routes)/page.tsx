@@ -3,6 +3,7 @@ import ProductList from '@/components/product-list';
 import Container from '@/components/ui/container';
 import { InfoCards } from '@/components/info-cards';
 import getCategories from '@/actions/categories/get-categories';
+import Image from 'next/image';
 
 export const revalidate = 0;
 
@@ -25,14 +26,31 @@ const HomePage = async () => {
   return (
     <div className='overflow-x-hidden'>
       <Container>
-        <div className='space-y-10 pb-10'>
+        <div className='space-y-5 pb-10'>
+          <div className='lg:hidden' style={{ width: 'auto', height: '245px', position: 'relative' }}>
+            <Image
+              src='/liquida_banner_mobile.svg'
+              alt='banner'
+              layout='fill'
+              objectFit='contain'
+              priority={true}
+            />
+          </div>
+          <div className='max-lg:hidden' style={{ width: 'auto', height: '255px', position: 'relative' }}>
+            <Image
+              src='/liquida_banner.svg'
+              alt='banner'
+              layout='fill'
+              objectFit='contain'
+              priority={true}
+            />
+          </div>
           <div className='px-4 sm:px-6'>
             <h1 className='text-3xl sm:text-4xl font-medium text-slate-700'>
               <span className='text-g-yellow'>Garanhuns Acessórios.</span> A
               melhor experiência para comprar importados.
             </h1>
           </div>
-
           <div className='flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8'>
             <ProductList title='Novidades' items={newProducts} />
           </div>

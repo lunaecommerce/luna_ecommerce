@@ -49,19 +49,18 @@ const OrdersDetailsPage = () => {
   }, [orderId]);
 
   if (loading) {
-    return <div className='flex justify-center w-full h-screen'><Loader /></div>;
+    return <div className='flex justify-center w-full min-h-screen'><Loader /></div>;
   }
 
   if (!order) {
     return <div>Nenhum pedido encontrado.</div>;
   }
 
-  console.log(orderId);
   return (
     <div className='bg-white h-fit '>
       <Container>
         <div className='px-4 sm:px-6 lg:px-8'>
-          <Breadcrumb className='my-6'>
+          <Breadcrumb className='mb-6'>
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink>
@@ -161,7 +160,7 @@ const OrdersDetailsPage = () => {
               <Separator />
               <div className='flex flex-col justify-between gap-4 h-full'>
                 <h3 className='text-2xl font-bold'>Produtos</h3>
-                <div className='flex w-full'>
+                <div className='flex w-full overflow-x-auto gap-2'>
                   {order.orderItems && order.orderItems.length ? (
                     order.orderItems.map(item => (
                       <div

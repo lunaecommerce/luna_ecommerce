@@ -20,14 +20,12 @@ const CartPage = () => {
   if (!isMounted) {
     return null;
   }
-
-  console.log(cart.items)
   return (
-    <div className='bg-white h-screen'>
+    <div className='bg-white min-h-screen relative'>
       <Container>
-        <div className='px-4 py-16 sm:px-6 lg:px-8'>
-          <h1 className='text-3xl font-bold text-black'>Carrinho</h1>
-          <div className='mt-12 lg:grid lg:grid-cols-12 lg:items-start gap-x-12'>
+        <div className='px-4 sm:px-6 lg:px-8 grid gap-8'>
+        <h1 className='text-3xl font-bold text-black'>Carrinho</h1>
+          <div className='lg:grid lg:grid-cols-12 lg:items-start gap-x-12'>
             <div className='lg:col-span-7'>
               {cart.items.length === 0 && (
                 <p className='text-neutral-500'>Sem itens no carrinho.</p>
@@ -38,7 +36,9 @@ const CartPage = () => {
                 ))}
               </ul>
             </div>
+            <div className="col-span-5 w-full max-lg:fixed bottom-0 left-0 max-lg:z-50">
             <Summary />
+            </div>
           </div>
         </div>
       </Container>

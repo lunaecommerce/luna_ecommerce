@@ -25,7 +25,7 @@ const Summary = () => {
     }
   }, [searchParams, removeAll]);
 
-  const totalPrice = calculateTotal(cart.items);
+  const totalPrice = calculateTotal(cart.items, 0.20);
 
   const onCheckout = async () => {
     const response = await axios.post(
